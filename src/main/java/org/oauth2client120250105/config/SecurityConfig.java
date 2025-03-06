@@ -13,7 +13,10 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/", "/success-logout", "/check-consent").permitAll()
+                        .requestMatchers("/",
+                                "/success-logout",
+                                "/without-consent-logout",
+                                "/check-consent").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(Customizer.withDefaults())
                 /*.logout((logout) -> (logout)

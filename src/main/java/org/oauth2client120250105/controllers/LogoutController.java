@@ -30,10 +30,6 @@ public class LogoutController {
 
         log.info("=== Выход из системы (клиент) ===");
 
-        if (consentRemoved) {
-            log.info("=== Согласие было удалено из другого сеанса ===");
-            return "redirect:/without-consent-logout";
-        }
         // Получаем токен доступа из сервиса MyTokenService
         String accessToken = tokenService.getAccessToken();
 
@@ -43,8 +39,14 @@ public class LogoutController {
 
         // URL для выхода через Authorization Server
         String logoutUrl = "http://authserver:9000/oauth2/logout";
+
         // URL для возврата в клиентское приложение после успешного выхода
-        String postLogoutRedirectUri = "http://localhost:8080/success-logout";
+        String postLogoutRedirectUri;
+        if (consentRemoved) {
+            log.info("=== Согласие было удалено из другого сеанса ===");
+            postLogoutRedirectUri = "http://localhost:8080/without-consent-logout";
+        } else
+            postLogoutRedirectUri = "http://localhost:8080/success-logout";
 
         // Формируем URL с токеном
         StringBuilder logoutUrlBuilder = new StringBuilder(logoutUrl)
