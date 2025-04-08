@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Error page</title>
+</head>
+
+<body>
+    <h1>Error</h1>
+
+    <a th:href="@{/}">Home page of application ...</a>
+    <br>
+
+    <p th:if="${errorObject.status != null}">Status:
+        <span th:text="${errorObject.status}">status</span>
+    </p>
+    <p th:if="${errorObject.error != null}">Error:
+        <span th:text="${errorObject.error}">error</span>
+    </p>
+    <p th:if="${errorObject.exception != null}">Exception:
+        <span th:text="${errorObject.exception}">exception</span>
+    </p>
+    <p th:if="${errorObject.message != null}">Message:
+        <span th:text="${errorObject.message}">message</span>
+    </p>
+    <p th:if="${errorObject.errors != null}">Errors:
+        <span th:text="${errorObject.errors}">errors</span>
+    </p>
+    <p th:if="${errorObject.trace != null}">Trace:
+        <span th:text="${errorObject.trace}">trace</span>
+    </p>
+    <p th:if="${errorObject.path != null}">Path:
+        <span th:text="${errorObject.path}">path</span>
+    </p>
+    <p th:if="${errorObject.requestMethod != null}">Method:
+        <span th:text="${errorObject.requestMethod}">requestMethod</span>
+    </p>
+    <p th:if="${errorObject.timestamp != null}">Timestamp:
+        <span th:text="${errorObject.timestamp}">timestamp</span>
+    </p>
+</body>
+
+</html>
