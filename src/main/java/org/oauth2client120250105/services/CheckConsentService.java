@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.ClientAuthorizationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -51,11 +52,17 @@ public class CheckConsentService {
                 if (response.getStatusCode().is2xxSuccessful()) {
                     return response.getBody();
                 }
-            } catch (Exception ex) {
-                log.error("=== Ошибка при проверке согласия ===", ex);
+            } catch (ClientAuthorizationException ex) {
+                log.error("=== Ошибка при проверке согласия (ClientAuthorizationException) ===");
+                log.error("=== {} ===", ex.getMessage());
                 // Возвращаем true, если согласие не провалидировано
                 // или произошла ошибка. Значение true указывает на
                 // отсутствие согласия.
+                return true;
+            } catch (Exception ex) {
+                // Тоже самое поведение в случае перехвата другого типа исключения
+                log.error("=== Ошибка при проверке согласия (Exception) ===");
+                log.error("=== {} ===", ex.getMessage());
                 return true;
             }
         }
