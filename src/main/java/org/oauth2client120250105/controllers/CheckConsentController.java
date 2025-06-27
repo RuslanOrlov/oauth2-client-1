@@ -14,7 +14,7 @@ public class CheckConsentController {
     @GetMapping("/check-consent")
     public String checkConsent() {
         if (checkConsentService.isConsentRemoved()) {
-            return "redirect:/my-logout";
+            return "redirect:/my-logout?consentRemoved=true";
         }
         return "redirect:/";
     }
